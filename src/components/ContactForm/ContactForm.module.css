@@ -1,0 +1,23 @@
+.form {
+  width: 400px;
+  margin-bottom: 30px;
+  padding: 10px;
+  border: 2px solid #000;
+}
+
+.form_text {
+  margin-bottom: 8px;
+}
+
+.form_input {
+  margin-bottom: 24px;
+}
+
+.form_button {
+  display: block;
+  font-size: 14px;
+  background-color: #fff;
+  border: 1px solid #b1aeae;
+  border-radius: 4px;
+  cursor: pointer;
+}

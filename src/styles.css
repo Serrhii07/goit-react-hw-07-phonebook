@@ -1,0 +1,11 @@
+body {
+  padding: 30px;
+  font-size: 18px;
+}
+
+p,
+h1,
+h2,
+ul {
+  margin: 0;
+}
