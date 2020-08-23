@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { toast } from 'react-toastify';
-import phonebookActions from '../../redux/phonebook/phonebook-actions';
+import phonebookOperations from '../../redux/phonebook/phonebook-operations';
 import PropTypes from 'prop-types';
 import styles from './ContactForm.module.css';
 
@@ -90,7 +90,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   onSubmit: ({ name, number }) =>
-    dispatch(phonebookActions.addContact({ name, number })),
+    dispatch(phonebookOperations.addContact({ name, number })),
 });
 
 ContactForm.propTypes = {

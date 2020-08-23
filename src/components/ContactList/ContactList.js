@@ -1,27 +1,38 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import ContactListItem from './ContactListItem';
-import phonebookActions from '../../redux/phonebook/phonebook-actions';
+import phonebookOperations from '../../redux/phonebook/phonebook-operations';
 import PropTypes from 'prop-types';
 
-const ContactList = ({ contacts, onDeleteContact }) => {
-  return (
-    <>
-      {contacts.length > 0 && (
-        <ul>
-          {contacts.map(({ id, name, number }) => (
-            <ContactListItem
-              key={id}
-              name={name}
-              number={number}
-              deleteContact={() => onDeleteContact(id)}
-            />
-          ))}
-        </ul>
-      )}
-    </>
-  );
-};
+class ContactList extends Component {
+  componentDidMount() {
+    this.props.fetchContacts();
+  }
+
+  render() {
+    const { contacts } = this.props;
+    const { onDeleteContact } = this.props;
+
+    return (
+      <>
+        {this.props.isLoadingContacts && <h2>Loading...</h2>}
+        {this.props.isError && <h2>Oops! Something went wrong :(</h2>}
+        {contacts.length > 0 && (
+          <ul>
+            {contacts.map(({ id, name, number }) => (
+              <ContactListItem
+                key={id}
+                name={name}
+                number={number}
+                deleteContact={() => onDeleteContact(id)}
+              />
+            ))}
+          </ul>
+        )}
+      </>
+    );
+  }
+}
 
 const getFilteredNames = (allContacts, filter) => {
   const normalizedFilter = filter.toLowerCase();
@@ -31,12 +42,15 @@ const getFilteredNames = (allContacts, filter) => {
   );
 };
 
-const mapStateToProps = ({ contacts: { items, filter } }) => ({
+const mapStateToProps = ({ contacts: { items, filter, loading, error } }) => ({
   contacts: getFilteredNames(items, filter),
+  isLoadingContacts: loading,
+  isError: error,
 });
 
 const mapDispatchToProps = dispatch => ({
-  onDeleteContact: id => dispatch(phonebookActions.deleteContact(id)),
+  onDeleteContact: id => dispatch(phonebookOperations.deleteContact(id)),
+  fetchContacts: () => dispatch(phonebookOperations.fetchContacts()),
 });
 
 ContactList.propTypes = {
